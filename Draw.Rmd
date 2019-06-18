@@ -1,0 +1,104 @@
+---
+title: "oakland2019"
+author: "name"
+date: "2019Äê6ÔÂ5ÈÕ"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+library(ggplot2)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+path='C:/PyPro/De/data/innocent'
+infected<-scan('C:/PyPro/De/data/infected_num.txt')
+x<-rep('airplane',length(infected))
+label<-c('mobile','bird','cat','deer','dog','frog','horse','ship','truck')
+loss<-infected
+for (i in c(1:9))
+{
+  i
+  patha=paste(path,toString(i),sep = '')
+  patha=paste(patha,'_num.txt',sep = '')
+  un<-scan(patha)
+  x<-c(x,rep(label[i],length(un)))
+  loss<-c(loss,un)
+}
+
+
+df<-data.frame(label=x,loss=loss)
+ggplot(df,aes(x=label,y=loss))+
+  geom_boxplot()+
+  theme(axis.text=element_text(size=15,face = 'bold'),,axis.title=element_text(size=20,face="bold"),plot.title=element_text(size=25))
+ggsave('loss.pdf')
+```
+```{r sads}
+loss1<-scan('C:/PyPro/De/data/loss33_num.txt')
+loss2<-scan('C:/PyPro/De/data/loss44_num.txt')
+data=c(0,1000)
+library(tidyr)
+
+test_data <-
+  data.frame(
+    loss1=loss1,
+    loss2 = loss2,
+    epoch=c(0:1000)
+  )
+test_data %>%
+    gather(Key,Value, loss1, loss2) %>%
+    ggplot(aes(x=epoch, y=Value, colour=Key)) +
+    geom_line()+
+    theme(axis.text=element_text(size=20,face = 'bold'),,axis.title=element_text(size=20,face="bold"),plot.title=element_text(size=25),legend.text=element_text(size=15))
+ggsave('C:/Users/gjf19/Pictures/Saved Pictures/loss_u.pdf')
+
+```
+
+
+```{r sadfs}
+df2 <- data.frame(Label=rep(c("Infected Label", "Uninfected Label"),5),
+                Dataset=rep(c("MNIST", "Fashion-MNIST", "GTSRB","Youtube Face","CIFAR-10"),2),
+                Prob=c(0.98,0,1,0,0.99,0,1,0,1,0))
+
+ggplot(data=df2, aes(x=Dataset, y=Prob, fill=Label)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  geom_text(aes(label=Prob), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)+
+  scale_fill_brewer(palette="Paired")+
+  theme(axis.text=element_text(size=11,face = 'bold'),,axis.title=element_text(size=20,face="bold"),plot.title=element_text(size=15))+
+  scale_fill_manual(values=c('black','lightblue'))+
+  labs(title="Detect Performance for BadNets")
+ggsave("BadNets Performance.pdf")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
